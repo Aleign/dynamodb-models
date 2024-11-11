@@ -11,9 +11,14 @@ class DynamoDBModels {
     _models;
     constructor(models, options) {
         this._options = {
+            prefix: 'aleign-api',
             ...(options || {})
         };
         this._models = {};
+        dynamoose_1.default.Table.defaults.set({
+            prefix: `${this._options.prefix}-${process.env.STAGE}-`,
+            create: false
+        });
         this.setupDynamoConnection(this._options);
         this.initialiseModels(models);
     }
