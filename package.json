@@ -1,0 +1,27 @@
+{
+  "name": "@aleign/dynamodb-models",
+  "version": "1.0.0",
+  "description": "DynamoDB model wrapper using dynamoose",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "npx tsx ./node_modules/.bin/mocha tests/**/*.test.ts",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "dynamoose": "^3.0.0"
+  },
+  "keywords": [
+    "dynamodb",
+    "dynamoose",
+    "models",
+    "aws"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
