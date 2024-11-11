@@ -1,7 +1,6 @@
 import dynamoose from 'dynamoose'
 import { ConnectionError } from './ConnectionError'
 
-
 interface ModelConfig {
   name: string
   schema: Record<string, any>
@@ -14,6 +13,7 @@ interface DynamoDBConfig {
   region?: string
   accessKeyId?: string
   secretAccessKey?: string
+  prefix?: string
 }
 
 type DynamooseModel = ReturnType<typeof dynamoose.model>
@@ -24,9 +24,16 @@ export class DynamoDBModels {
 
   constructor(models: ModelConfig[], options?: DynamoDBConfig) {
     this._options = {
+      prefix: 'aleign-api',
       ...(options || {})
     }
     this._models = {}
+
+    dynamoose.Table.defaults.set({
+      prefix: `${this._options.prefix}-${process.env.STAGE}-`,
+      create: false
+    })
+
     this.setupDynamoConnection(this._options)
     this.initialiseModels(models)
   }
@@ -66,7 +73,6 @@ export class DynamoDBModels {
       const dynamooseModel = dynamoose.model(name, modelSchema, { tableName })
       this._models[name] = dynamooseModel
       ;(this as any)[name] = dynamooseModel
-
     } catch (e: any) {
       console.error(e)
       throw new ConnectionError(e.message, e.statusCode || 400)
