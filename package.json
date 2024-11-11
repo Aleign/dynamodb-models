@@ -1,6 +1,6 @@
 {
   "name": "@aleign/dynamodb-models",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "DynamoDB model wrapper using dynamoose",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

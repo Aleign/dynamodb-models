@@ -1,1 +1,17 @@
-"use strict";var y=Object.create;var a=Object.defineProperty;var g=Object.getOwnPropertyDescriptor;var C=Object.getOwnPropertyNames;var h=Object.getPrototypeOf,_=Object.prototype.hasOwnProperty;var D=(s,e)=>{for(var o in e)a(s,o,{get:e[o],enumerable:!0})},m=(s,e,o,r)=>{if(e&&typeof e=="object"||typeof e=="function")for(let n of C(e))!_.call(s,n)&&n!==o&&a(s,n,{get:()=>e[n],enumerable:!(r=g(e,n))||r.enumerable});return s};var f=(s,e,o)=>(o=s!=null?y(h(s)):{},m(e||!s||!s.__esModule?a(o,"default",{value:s,enumerable:!0}):o,s)),u=s=>m(a({},"__esModule",{value:!0}),s);var E={};D(E,{DynamoDBModels:()=>c});module.exports=u(E);var i=f(require("dynamoose"));var d=class extends Error{statusCode;constructor(e,o){super(e),this.statusCode=o||e.statusCode}};var c=class{_options;_models;constructor(e,o){this._options={...o||{}},this._models={},this.setupDynamoConnection(this._options),this.initialiseModels(e)}get models(){return this._models}setupDynamoConnection(e){if(process.env.NODE_ENV==="development"&&i.default.aws.ddb.local(process.env.AWS_ENDPOINT_URL),e.endpoint){let o=new i.default.aws.ddb.DynamoDB({endpoint:e.endpoint,region:e.region||process.env.AWS_REGION,credentials:{accessKeyId:e.accessKeyId||process.env.AWS_ACCESS_KEY_ID,secretAccessKey:e.secretAccessKey||process.env.AWS_SECRET_ACCESS_KEY}});i.default.aws.ddb.set(o)}}initialiseModels(e){e?.length&&e.forEach(o=>this.initialiseModel(o))}initialiseModel(e){let{name:o,schema:r,options:n,tableName:l}=e,p=new i.default.Schema({...r},{...n||{}});try{let t=i.default.model(o,p,{tableName:l});this._models[o]=t,this[o]=t}catch(t){throw console.error(t),new d(t.message,t.statusCode||400)}}};0&&(module.exports={DynamoDBModels});
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./DynamoDBModels"), exports);
